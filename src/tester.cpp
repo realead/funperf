@@ -45,13 +45,15 @@ double MULT_TIME=0.0;
 
 const double MAX_OMEGA=1e20;
 const double MIN_OMEGA=1e-20;
-const double STEP_FACTOR=1.4;
+const double STEP_FACTOR=1.1;
 
 template<typename Trafo>
 void sample_with_timeit(const std::string &fun_name, std::vector<double> &vec){
    for(double omega=MIN_OMEGA; omega<MAX_OMEGA; omega*=STEP_FACTOR){
-      double time=timeitmagic::timeit(Trafo(vec), Fill(vec, omega), 100).time;
-      std::cout<<fun_name<<","<<omega<<","<<(time/MULT_TIME)<<"\n";
+      double time=timeitmagic::timeit(Trafo(vec), Fill(vec, omega), 100).time/MULT_TIME;
+      if(time>1000.0)
+          std::cerr<<"bad tan"<<omega<<" "<<time<<" "<<tan(omega)<<"\n";
+      std::cout<<fun_name<<","<<omega<<","<<(time)<<"\n";
    } 
 }
 
@@ -81,6 +83,21 @@ int main(){
    sample_with_timeit<Transform<&asin> >("asin", vec);
    sample_with_timeit<Transform<&acos> >("acos", vec);
    sample_with_timeit<Transform<&atan> >("atan", vec);
+
+   //hyp functions:
+   sample_with_timeit<Transform<&sinh> >("sinh", vec);
+   sample_with_timeit<Transform<&cosh> >("cosh", vec);
+   sample_with_timeit<Transform<&tanh> >("tanh", vec);
+
+   //a-hyp functions:
+   sample_with_timeit<Transform<&asinh> >("asinh", vec);
+   sample_with_timeit<Transform<&acosh> >("acosh", vec);
+   sample_with_timeit<Transform<&atanh> >("atanh", vec);
+
+   //other functions:
+   sample_with_timeit<Transform<&sqrt> >("sqrt", vec);
+   sample_with_timeit<Transform<&exp> >("exp", vec);
+   sample_with_timeit<Transform<&log> >("log", vec);
 
    //ensure that the last was not optimized away:
    fill(1.0, vec);
