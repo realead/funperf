@@ -1,5 +1,7 @@
 set -e
 
+mkdir -p "report"
+
 RESULT="../report/test_results.txt"
 
 
