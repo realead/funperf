@@ -101,6 +101,10 @@ The costs are (in flops):
 
 sqrt is pretty cheap compared to exp and log.
 
+#### -ffast-math
+
+adding -ffast-math didn't change much - the only  difference was sqrt, which dropped from 24 flops to 8 flops (see data/test_results_glibc2.23_ffastmath.txt for the performance).
+
 
 
 
