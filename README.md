@@ -106,7 +106,81 @@ sqrt is pretty cheap compared to exp and log.
 adding -ffast-math didn't change much - the only  difference was sqrt, which dropped from 24 flops to 8 flops (see data/test_results_glibc2.23_ffastmath.txt for the performance).
 
 
+### VisualStudio 2015
 
+The test machines were different (also different generations of Intel-processors), so the comparison is not that good...
+
+#### sin/cos/tan
+
+![1](data/trig_VS15.png)
+
+
+The costs are (in flops):
+
+            1       10       10^9    3*10^14
+    sin    39       39       73      75
+    cos    40       40       82      82
+    tan    75       80      130      130
+
+VS2015 seems to be 5-10 times as fast as glibc-2.23!
+
+#### asin/acos/atan
+
+![1](data/atrig_VS15.png)
+
+
+The costs are (in flops):
+
+            <1       10       10^9    3*10^14
+    asin    75      228        228      228
+    acos    50      230        230      230
+    atan    37      37         38       38
+
+atan is about factor 5-10 faster than glibc, but strangely asin/acos are much slower for invalid arguments(>1) but also otherwise about 2 times slower.
+
+#### asin/acos/atan
+
+![1](data/hyp_VS15.png)
+
+
+The costs are (in flops):
+
+            1       10       10^9    3*10^14
+    sinh    55       55        233      233
+    cosh    52       81        242      242
+    tanh    81       80        22       22
+
+probably handling nans is pretty costly (for algorithm or the architecture)
+
+
+#### asin/acos/atan
+
+![1](data/ahyp.png)
+
+
+The costs are (in flops):
+
+            1       10       10^9    3*10^14
+    asinh   114    115        114      115
+    acosh   211    92         92        92
+    atanh    76    211        210       210
+
+probably handling nans is pretty costly (for algorithm or the architecture)
+
+
+#### others
+
+![1](data/others_VS15.png)
+
+
+The costs are (in flops):
+
+            1       
+    sqrt    19
+    exp     29
+    log     27
+
+exp and log are about factor 10 faster than glibc.
 
 
 
