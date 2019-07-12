@@ -289,6 +289,14 @@ which meas additional 20% could be won by switching to the less precise mode.
 
 In overall, Intel's vml is a great improvement compared to glibc and the much faster MSVC2015. However, having non-finite results (nan/infinity) has a very big negative impact on performance
 
+#### parallel version:
+
+linking against `-lmkl_gnu_thread -liomp5` instead of `-lmkl_sequential` leads to usage of parallel version.
+
+However, for small number of elements,VML falls back to the sequential version. Which number is considered big enough to start the parallelized version depends on function, for example:
+
+For `sin` parallelization kicks in earlier than for `exp`. 
+
 
 
 
