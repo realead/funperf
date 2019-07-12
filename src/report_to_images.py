@@ -33,5 +33,7 @@ create_image(["asin", "acos", "atan"], os.path.join(output_folder,'atrig.png'))
 create_image(["sinh", "cosh", "tanh"], os.path.join(output_folder,'hyp.png'))
 create_image(["asinh", "acosh", "atanh"], os.path.join(output_folder,'ahyp.png'))
 create_image(["sqrt", "exp", "log"], os.path.join(output_folder,'others.png'))
+create_image(["asinh_la", "asinh_ha", "asinh_ep"], os.path.join(output_folder,'asinhs.png'))
+
 
 
