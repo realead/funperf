@@ -122,7 +122,7 @@ The costs are (in flops):
     cos    40       40       82      82
     tan    75       80      130      130
 
-VS2015 seems to be 5-10 times as fast as glibc-2.23!
+10-30 times faster than glibc-2.23, and much faster than MSVC2015.
 
 #### asin/acos/atan
 
@@ -136,7 +136,7 @@ The costs are (in flops):
     acos    50      230        230      230
     atan    37      37         38       38
 
-atan is about factor 5-10 faster than glibc, but strangely asin/acos are much slower for invalid arguments(>1) but also otherwise about 2 times slower.
+atan is about factor 15 faster than glibc, but strangely asin/acos are much slower for invalid arguments(>1) but also otherwise about 2 times slower.
 
 #### asin/acos/atan
 
@@ -155,7 +155,7 @@ probably handling nans is pretty costly (for algorithm or the architecture)
 
 #### asin/acos/atan
 
-![1](data/ahyp.png)
+![1](data/ahyp_VS15.png)
 
 
 The costs are (in flops):
@@ -181,6 +181,114 @@ The costs are (in flops):
     log     27
 
 exp and log are about factor 10 faster than glibc.
+
+
+### Intel(R) Math Kernel Library Version 2019.0.3, 64bit
+
+
+The same test machine as glibc. To run, set environments variable `MKL_INCLUDE` (can be `src/my_mkl`) and `MKL_LIB` and run `creater_vml_report.sh`, e.g.:
+
+    export MKL_INCLUDE=my_mkl
+    export MKL_LIB=/home/ed/anaconda37/lib 
+    sh create_vml_report.sh
+
+all results are for single-thread.
+
+#### sin/cos/tan
+
+![1](data/trig_vml.png)
+
+
+The costs are (in flops):
+
+            1       10       10^9    3*10^14
+    sin    11       11       45      45
+    cos    10       10       45      45
+    tan    27       27       77      78
+
+VS2015 seems to be 5-10 times as fast as glibc-2.23!
+
+#### asin/acos/atan
+
+![1](data/atrig_vml.png)
+
+
+The costs are (in flops):
+
+            <1       10       10^9    3*10^14
+    asin    12      535        535      535
+    acos    12      535        535      535
+    atan    23      23         23       23
+
+atan is about factor 5-10 faster than glibc, but strangely asin/acos are much slower for invalid arguments(>1). However otherwise 4 times as fast.
+
+#### asin/acos/atan
+
+![1](data/hyp_vml.png)
+
+
+The costs are (in flops):
+
+            1       10       10^9    3*10^14
+    sinh    15       15        532      532
+    cosh    11       11        522      522
+    tanh    15       15        15       15
+
+the most difference is for small values of cosh: 30 times faster (otherwise factor 4).
+
+
+#### asin/acos/atan
+
+![1](data/ahyp_vml.png)
+
+
+The costs are (in flops):
+
+            <1       10       10^9    3*10^14
+    asinh   24      24        24      24
+    acosh   23      23        23      23
+    atanh   19     527       527     527
+
+about 4 times faster than glibc (for non-nan-values)
+
+
+#### others
+
+![1](data/others_vml.png)
+
+
+The costs are (in flops):
+
+            1     10^9   
+    sqrt    8       8
+    exp     8     500
+    log     9       9
+
+exp and log are factor 40 faster than glibc (once again slower when result not finite)
+
+
+#### accuracy - modes
+
+for different accuracy-modes we get:
+
+  VML_HA 	high accuracy versions of VM functions
+  VML_LA 	low accuracy versions of VM functions
+  VML_EP  enhanced performance accuracy versions of VM functions
+
+![1](data/asinhs_vml.png)
+
+
+The costs for `asinh` (the slowest function) are (in flops):
+
+             1 
+    VML_HA   24 
+    VML_LA   20.5 
+    VML_EP   19 
+
+which meas additional 20% could be won by switching to the less precise mode.
+
+In overall, Intel's vml is a great improvement compared to glibc and the much faster MSVC2015. However, having non-finite results (nan/infinity) has a very big negative impact on performance
+
 
 
 
