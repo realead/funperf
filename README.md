@@ -122,7 +122,7 @@ The costs are (in flops):
     cos    40       40       82      82
     tan    75       80      130      130
 
-10-30 times faster than glibc-2.23, and much faster than MSVC2015.
+VS2015 seems to be 5-10 times as fast as glibc-2.23!
 
 #### asin/acos/atan
 
@@ -136,7 +136,7 @@ The costs are (in flops):
     acos    50      230        230      230
     atan    37      37         38       38
 
-atan is about factor 15 faster than glibc, but strangely asin/acos are much slower for invalid arguments(>1) but also otherwise about 2 times slower.
+atan is about factor 5-10 faster than glibc, but strangely asin/acos are much slower for invalid arguments(>1). Otherwise CS2015 is about 2 times faster for asin/acos.
 
 #### asin/acos/atan
 
@@ -206,7 +206,7 @@ The costs are (in flops):
     cos    10       10       45      45
     tan    27       27       77      78
 
-VS2015 seems to be 5-10 times as fast as glibc-2.23!
+10-30 times faster than glibc-2.23, and much faster than MSVC2015.
 
 #### asin/acos/atan
 
@@ -220,7 +220,7 @@ The costs are (in flops):
     acos    12      535        535      535
     atan    23      23         23       23
 
-atan is about factor 5-10 faster than glibc, but strangely asin/acos are much slower for invalid arguments(>1). However otherwise 4 times as fast.
+atan is about factor 15 faster than glibc, but strangely asin/acos are much slower for invalid arguments(>1). However, VML is otherwise 4 times faster.
 
 #### asin/acos/atan
 
