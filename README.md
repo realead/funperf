@@ -297,6 +297,8 @@ However, for small number of elements,VML falls back to the sequential version. 
 
 For `sin` parallelization kicks in earlier than for `exp`. 
 
+For more experiments with VML see https://github.com/realead/cyvml.
+
 
 
 
